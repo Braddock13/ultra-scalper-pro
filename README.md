@@ -1,26 +1,34 @@
 # ULTRA SCALPER PRO
 
-Terminal self-hosted de scalping MT5 haute fréquence.
+Robot de scalping **live** pour MetaTrader 5, plus un terminal web (réglages, backtest, répétition paper).
 
-## Ce que c’est
+## Robot réel (MT5)
 
-- Tableau de bord, pont MT5, backtest tick, paramètres
-- Lots 0.03 simultanés, timeframes sous M1 (tick / 1s / 5s / 15s / 30s)
-- Mode agressif (Ignition / Ultra / Overdrive) — pas un robot 1–2 %
-- Auto-close +55 USD de session si le compte est sous 5 000 USD
-- Backtest HF : le même moteur, rejoué en dizaines de milliers de ticks
+Le navigateur ne peut pas router d’ordres chez un courtier. L’exécuteur live est l’Expert Advisor :
 
-Sans pont local, l’exécution tourne en paper ultra-fidèle. Les identifiants MT5 restent dans le navigateur.
+[`public/robot/UltraScalperPro.mq5`](public/robot/UltraScalperPro.mq5)
 
-## Lancer en local
+1. Ouvrir **MetaTrader 5** (n’importe quel courtier) et se connecter au compte.
+2. F4 → MetaEditor → ouvrir `UltraScalperPro.mq5` → Compiler.
+3. Glisser l’EA sur un graphique. Activer **Algo Trading**.
+4. Clic droit sur l’EA → Propriétés → **Charger** le fichier `.set` exporté depuis le terminal web (Paramètres).
+
+Le robot tourne en **OnTick** (sous M1), lots 0.03 simultanés, modes Ignition / Ultra / Overdrive, fermeture auto **+55 USD** si le compte est sous 5 000 USD.
+
+Si un symbole est introuvable (suffixe courtier `EURUSD.m`, `XAUUSDm`…), ouvrez le marché dans MT5 puis relancez l’EA.
+
+## Terminal web
 
 ```bash
 npm install
 npm run dev
 ```
 
-Ouvrir le terminal, page **MT5** : login numérique, mot de passe, serveur du courtier. Puis **Armer** → **Démarrer**. **Backtest** pour un replay haute fréquence.
+- **MT5** — télécharger l’EA et le `.set`
+- **Paramètres** — lots, puissance, symboles, cible
+- **Backtest** — replay tick du même moteur
+- **Tableau** — répétition paper uniquement
 
 ## Avertissement
 
-Robot agressif. Le trading sur marge peut liquider le compte. Un backtest ou un paper trade ne préjuge pas d’un résultat live.
+Robot agressif. Le trading sur marge peut liquider le compte. Testez d’abord en **démo**. Un backtest paper ne préjuge pas du live.

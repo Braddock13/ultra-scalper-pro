@@ -7,6 +7,7 @@ import { EquitySpark } from "@/components/equity-spark";
 import { useEngineStore } from "@/lib/engine/store";
 import { SYMBOL_LIST, SYMBOL_MAP } from "@/lib/engine/symbols";
 import { formatLots, formatMoney, formatPrice, formatSigned, formatTime, pnlClass } from "@/lib/engine/format";
+import { resetBooks } from "@/lib/engine/runtime";
 import { cn } from "@/lib/utils";
 
 function HudCell({
@@ -53,20 +54,34 @@ export function DashboardView() {
     return (
       <div className="mx-auto flex max-w-lg flex-col items-center py-16 text-center">
         <p className="text-[0.7rem] tracking-[0.28em] text-muted">ULTRA SCALPER PRO</p>
-        <h1 className="mt-3 text-3xl font-semibold tracking-tight">Aucun compte lié</h1>
+        <h1 className="mt-3 text-3xl font-semibold tracking-tight">Robot live = MetaTrader 5</h1>
         <p className="mt-3 text-sm text-muted">
-          Connectez un login MT5 — n’importe quel courtier — pour streamer les ticks
-          et armer le robot.
+          Téléchargez l’Expert Advisor, compilez-le, glissez-le sur un graphique.
+          Le tableau ici ne fait que de la répétition paper.
         </p>
-        <Button className="mt-8" asChild>
-          <Link to="/mt5">Connecter MT5</Link>
-        </Button>
+        <div className="mt-8 flex w-full flex-col gap-2 sm:flex-row sm:justify-center">
+          <Button asChild>
+            <Link to="/mt5">Installer l’EA live</Link>
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => {
+              resetBooks();
+              useEngineStore.getState().completeConnect();
+            }}
+          >
+            Répéter en paper
+          </Button>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="space-y-4">
+      <p className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-xs text-muted">
+        Répétition paper — les ordres live passent uniquement par l’EA dans MetaTrader 5.
+      </p>
       <div className="grid grid-cols-2 gap-2 md:grid-cols-6">
         <HudCell label="Équité" value={formatMoney(account.equity)} />
         <HudCell label="Balance" value={formatMoney(account.balance)} />

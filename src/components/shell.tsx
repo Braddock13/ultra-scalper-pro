@@ -105,7 +105,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
                   online ? "border-profit/30 text-profit" : "border-border text-muted",
                 )}
               >
-                {mt5.gatewayUrl && online ? "Live" : online ? "Paper" : "Off"}
+                {online ? "Paper" : "MT5"}
               </span>
             </div>
           </header>
